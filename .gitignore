@@ -1,0 +1,13 @@
+.vsconfig
+.meta
+.sln
+.csproj
+.asset
+.inputactions
+.vs/
+Library/
+Logs/
+obj/
+Packages/
+ProjectSettings/
+UserSettings/
