@@ -1,3 +1,4 @@
+using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -14,39 +15,61 @@ public class PlayerController : MonoBehaviour
     private SpriteRenderer sprite;
     private float horizontalInput;
     private bool isJumpPressed;
-    private bool isRunning;
+    private bool hasJumped = false;
+    private bool isRunning = false;
     private bool isGrounded;
+    private bool canMove = true;
 
-
-
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        // get components
         rb = GetComponent<Rigidbody2D>();
         sprite = GetComponentInChildren<SpriteRenderer>();
         anim = GetComponentInChildren<Animator>();
+
+        //freeze rotation to make sure the character doesn't fall when applied force
         rb.freezeRotation = true;
     }
 
-    // Update is called once per frame
     void Update()
     {
-        horizontalInput = Input.GetAxisRaw("Horizontal");
-        isJumpPressed = Input.GetButtonDown("Jump");
-        isRunning = Input.GetKey(KeyCode.LeftShift);
-        isGrounded = IsGrounded();
+        if (canMove)
+        {
+            horizontalInput = Input.GetAxisRaw("Horizontal");
+            isJumpPressed = Input.GetButtonDown("Jump");
+            isRunning = Input.GetKey(KeyCode.LeftShift);
+        }
+
+        else
+        {
+            horizontalInput = 0;
+            isJumpPressed = false;
+            isRunning = false; 
+        }
 
         if (isJumpPressed && isGrounded)
         {
-            rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
             anim.SetTrigger("jump");
+            hasJumped = true;
+            isGrounded = false;
+            StartCoroutine(JumpRoutine());
+        }
+
+        if (!hasJumped)
+        {
+            isGrounded = IsGrounded();
+        }
+
+        if (hasJumped && rb.linearVelocityY < 0f && IsGrounded())
+        {
+            hasJumped = false;
         }
 
         if (horizontalInput == 0)
         {
             anim.SetFloat("speed", 0);
         }
-        else
+        else 
         {
             if (!isRunning)
             {
@@ -56,9 +79,10 @@ public class PlayerController : MonoBehaviour
             {
                 anim.SetFloat("speed", 1);
             }
-            sprite.flipX = (horizontalInput <= 0);
+            sprite.flipX = (horizontalInput < 0);
         }
 
+        anim.SetBool("isJumping", hasJumped);
         anim.SetBool("grounded", isGrounded);
     }
 
@@ -89,6 +113,18 @@ public class PlayerController : MonoBehaviour
     private void OnDrawGizmos()
     {
         Gizmos.DrawWireCube(transform.position - transform.up * castDistance, boxSize);
+    }
+
+    private IEnumerator JumpRoutine()
+    {
+        canMove = false;
+        yield return new WaitForSeconds(0.35f);
+        float hVel = rb.linearVelocityX;
+        Vector2 forward = new Vector2(hVel * speed, 0f);
+        Vector2 upForce = Vector2.up * jumpForce;
+        rb.AddForce(forward + upForce, ForceMode2D.Impulse);
+        anim.SetBool("isJumping", true);
+        canMove = true;
     }
 
 }
