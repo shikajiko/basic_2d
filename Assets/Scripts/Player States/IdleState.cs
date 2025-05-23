@@ -19,4 +19,10 @@ public class IdleState : PlayerState
         }
     }
 
+    public override void PhysicsUpdate()
+    {
+        base.PhysicsUpdate();
+        player.rb.linearVelocityX = Mathf.Lerp(player.rb.linearVelocityX, 0f, 0.2f);
+    }
+
 }

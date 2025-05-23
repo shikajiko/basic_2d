@@ -9,19 +9,16 @@ public class RunningState : PlayerState
 
     public override void TransitionChecks()
     {
-        if (!player.isHoldingShift)
+        if(Mathf.Abs(player.horizontalInput) < 1)
         {
-            if(player.horizontalInput != 0)
-            {
-                stateMachine.ChangeState(player.IdleState);
-            }
-            else
-            {
-                stateMachine.ChangeState(player.WalkState);
-            }
+            stateMachine.ChangeState(player.IdleState);
+        }
+        else if (!player.isHoldingShift)
+        {
+            stateMachine.ChangeState(player.WalkState);
         }
 
-        if(player.IsGrounded() && player.isJumpPressed)
+        if (player.IsGrounded() && player.isJumpPressed)
         {
             stateMachine.ChangeState(player.JumpState);
         }
