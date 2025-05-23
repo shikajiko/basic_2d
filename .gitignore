@@ -1,5 +1,7 @@
 .vsconfig
 .meta
+.png.meta
+.cs.meta
 .sln
 .csproj
 .asset

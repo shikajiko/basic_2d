@@ -58,11 +58,13 @@ public class PlayerController : MonoBehaviour
         if (!hasJumped)
         {
             isGrounded = IsGrounded();
+            anim.SetBool("grounded", isGrounded);
         }
 
-        if (hasJumped && rb.linearVelocityY < 0f && IsGrounded())
+        if (hasJumped && rb.linearVelocityY <= -0.01f && IsGrounded())
         {
             hasJumped = false;
+            anim.SetBool("grounded", isGrounded);
         }
 
         if (horizontalInput == 0)
@@ -83,7 +85,6 @@ public class PlayerController : MonoBehaviour
         }
 
         anim.SetBool("isJumping", hasJumped);
-        anim.SetBool("grounded", isGrounded);
     }
 
     private void FixedUpdate()
@@ -118,13 +119,12 @@ public class PlayerController : MonoBehaviour
     private IEnumerator JumpRoutine()
     {
         canMove = false;
-        yield return new WaitForSeconds(0.35f);
-        float hVel = rb.linearVelocityX;
-        Vector2 forward = new Vector2(hVel * speed, 0f);
+        yield return new WaitForSeconds(0.1f);
         Vector2 upForce = Vector2.up * jumpForce;
-        rb.AddForce(forward + upForce, ForceMode2D.Impulse);
+        rb.AddForce(upForce, ForceMode2D.Impulse);
         anim.SetBool("isJumping", true);
         canMove = true;
+
     }
 
 }
