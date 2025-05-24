@@ -40473,7 +40473,7 @@ GameObject:
   - component: {fileID: 1826840878}
   m_Layer: 6
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -40593,8 +40593,8 @@ GameObject:
   - component: {fileID: 1987001596}
   - component: {fileID: 1987001595}
   - component: {fileID: 1987001594}
-  - component: {fileID: 1987001593}
   - component: {fileID: 1987001598}
+  - component: {fileID: 1987001599}
   m_Layer: 3
   m_Name: Enemy
   m_TagString: Untagged
@@ -40602,24 +40602,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1987001593
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1987001592}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 46f793c2bc845e44b826933ca80734c3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  player: {fileID: 1826840871}
-  speed: 300
-  circleRadius: 6.97
-  playerMask:
-    serializedVersion: 2
-    m_Bits: 64
 --- !u!61 &1987001594
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -40785,6 +40767,25 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &1987001599
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1987001592}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7980c776cad763642a14e34cb2a2966b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 1826840871}
+  speed: 0
+  circleRadius: 10
+  playerMask:
+    serializedVersion: 2
+    m_Bits: 64
+  exclamationPrefab: {fileID: 7115595819613359748, guid: 425f4ee264f9553489b83b6554ea9a65, type: 3}
 --- !u!1 &2009395148
 GameObject:
   m_ObjectHideFlags: 0

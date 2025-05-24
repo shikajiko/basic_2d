@@ -61,20 +61,24 @@
     <Analyzer Include="D:\Unity\6000.0.47f1\Editor\Data\Tools\Unity.SourceGenerators\Unity.UIToolkit.SourceGenerator.dll" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\Zombie States\ZombieAttack.cs" />
     <Compile Include="Assets\testing.cs" />
     <Compile Include="Assets\Scripts\PlayerController.cs" />
+    <Compile Include="Assets\Scripts\Enemy Interfaces\IEnemy.cs" />
     <Compile Include="Assets\Scripts\Player.cs" />
     <Compile Include="Assets\Scripts\Player States\WalkState.cs" />
     <Compile Include="Assets\Scripts\EnemyState.cs" />
     <Compile Include="Assets\Scripts\ParallaxEffect.cs" />
     <Compile Include="Assets\Scripts\EnemyController.cs" />
-    <Compile Include="Assets\Scripts\IEnemy.cs" />
     <Compile Include="Assets\Scripts\Player States\RunningState.cs" />
+    <Compile Include="Assets\Scripts\Zombie States\ZombieAggro.cs" />
     <Compile Include="Assets\Scripts\Player States\IdleState.cs" />
+    <Compile Include="Assets\Scripts\Exclamation.cs" />
     <Compile Include="Assets\Scripts\EnemyStateMachine.cs" />
     <Compile Include="Assets\Scripts\PlayerState.cs" />
     <Compile Include="Assets\Scripts\PlayerStateMachine.cs" />
     <Compile Include="Assets\Scripts\Zombie.cs" />
+    <Compile Include="Assets\Scripts\Zombie States\ZombiePatrol.cs" />
     <Compile Include="Assets\Scripts\Player States\JumpState.cs" />
     <Compile Include="Assets\Scripts\CameraController.cs" />
   </ItemGroup>

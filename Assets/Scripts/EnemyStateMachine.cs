@@ -1,19 +1,32 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyStateMachine
 {
-    public EnemyState _currentState;
-
-    public void ChangeState(EnemyState newState)
+    string current;
+    private readonly Dictionary<string, EnemyState> _states= new Dictionary<string, EnemyState>();
+    
+    public EnemyState CurrentState;
+    public void Register(string key, EnemyState state)
     {
-        _currentState.Exit();
-        _currentState = newState;
-        _currentState.Enter();
+        _states[key] = state;
+    }
+    public void ChangeState(string key)
+    {
+        CurrentState.Exit();
+        CurrentState = _states[key];
+        current = key;
+        CurrentState.Enter();
     }
 
-    public void InitializeStateMachine(EnemyState initialState)
+    public void InitializeStateMachine(string key)
     {
-        _currentState = initialState;
-        _currentState.Enter();
+        CurrentState = _states[key];
+        CurrentState.Enter();
+    }
+
+    public void GetState()
+    {
+        Debug.Log(current);
     }
 }

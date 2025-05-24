@@ -7,6 +7,7 @@ public class EnemyState
     protected Animator animator;
     protected string animationName;
 
+    protected bool isExistingState;
     protected bool isAnimationFinished;
     protected float startTime;
 
@@ -20,6 +21,7 @@ public class EnemyState
 
     public virtual void Enter()
     {
+        isExistingState = false;
         isAnimationFinished = false;
         startTime = Time.time;
         animator.SetBool(animationName, true);
