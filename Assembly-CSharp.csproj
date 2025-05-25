@@ -63,6 +63,7 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\Zombie States\ZombieAttack.cs" />
     <Compile Include="Assets\testing.cs" />
+    <Compile Include="Assets\Scripts\PlayerAttackState.cs" />
     <Compile Include="Assets\Scripts\PlayerController.cs" />
     <Compile Include="Assets\Scripts\Enemy Interfaces\IEnemy.cs" />
     <Compile Include="Assets\Scripts\Player.cs" />
@@ -79,7 +80,9 @@
     <Compile Include="Assets\Scripts\PlayerStateMachine.cs" />
     <Compile Include="Assets\Scripts\Zombie.cs" />
     <Compile Include="Assets\Scripts\Zombie States\ZombiePatrol.cs" />
+    <Compile Include="Assets\Scripts\Player States\PunchState2.cs" />
     <Compile Include="Assets\Scripts\Player States\JumpState.cs" />
+    <Compile Include="Assets\Scripts\Player States\PunchState1.cs" />
     <Compile Include="Assets\Scripts\CameraController.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -19,10 +19,6 @@ public class WalkState : PlayerState
         {
             stateMachine.ChangeState(player.IdleState);
         }
-
-        if (player.isJumpPressed == true && player.IsGrounded()) {
-            stateMachine.ChangeState(player.JumpState);
-        }
     }
 
     public override void PhysicsUpdate()

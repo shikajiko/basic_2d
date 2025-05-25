@@ -12,11 +12,6 @@ public class IdleState : PlayerState
         if (player.horizontalInput != 0) {
             stateMachine.ChangeState(player.WalkState);
         }
-
-        if (player.isJumpPressed == true && player.IsGrounded())
-        {
-            stateMachine.ChangeState(player.JumpState);
-        }
     }
 
     public override void PhysicsUpdate()

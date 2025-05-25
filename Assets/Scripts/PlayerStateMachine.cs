@@ -16,4 +16,9 @@ public class PlayerStateMachine
         _currentState = initialState;
         _currentState.Enter();
     }
+
+    public void GetCurrentState()
+    {
+        Debug.Log(_currentState.GetType().Name);
+    }
 }
