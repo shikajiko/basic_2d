@@ -14,6 +14,12 @@ public class Zombie : MonoBehaviour, IEnemy
     public float circleRadius;
     public LayerMask playerMask;
 
+
+    //variables for managing hit and death
+    public int health;
+    [HideInInspector] public int lastHitDirection;
+    [HideInInspector] public float lastHitForce;
+
     [SerializeField] GameObject exclamationPrefab;
     GameObject exclamation;
     Exclamation exclamationScript;
@@ -22,16 +28,19 @@ public class Zombie : MonoBehaviour, IEnemy
     {
         //get each needed components
         Rigidbody2D = GetComponent<Rigidbody2D>();
-        Animator = GetComponent<Animator>();
-        Sprite = GetComponent<SpriteRenderer>();
+        Animator = GetComponentInChildren<Animator>();
+        Sprite = GetComponentInChildren<SpriteRenderer>();
 
         //register each states to StateMachine's dictionary
         stateMachine = new EnemyStateMachine();
         stateMachine.Register("Patrol", new ZombiePatrol(this, stateMachine, Animator, "Patrol"));
         stateMachine.Register("Aggro", new ZombieAggro(this, stateMachine, Animator, "Aggro"));
         stateMachine.Register("Attack", new ZombieAttack(this, stateMachine, Animator, "Attack"));
+        stateMachine.Register("Idle", new ZombieIdle(this, stateMachine, Animator, "Idle"));
+        stateMachine.Register("Hurt", new ZombieHurt(this, stateMachine, Animator, "Hurt"));
+        stateMachine.Register("Death", new ZombieDeath(this, stateMachine, Animator, "Death"));
 
-        stateMachine.InitializeStateMachine("Patrol");
+        stateMachine.InitializeStateMachine("Idle");
 
         //instantiate exclamation mark prefab to display when the enemy is aggroed
         exclamation = Instantiate(exclamationPrefab, transform);
@@ -41,6 +50,7 @@ public class Zombie : MonoBehaviour, IEnemy
         //get player's game object and layer
         player = GameObject.FindWithTag("Player");
         playerMask = 1 << player.layer;
+        health = 5;
     }
 
     void Update()
@@ -48,7 +58,9 @@ public class Zombie : MonoBehaviour, IEnemy
         playerPosition = player.transform.position;
         isAggro = DetectPlayer();
         stateMachine.CurrentState.LogicUpdate();
-        //stateMachine.GetState();
+        stateMachine.GetState();
+
+        
     }
 
     void FixedUpdate()
@@ -79,5 +91,25 @@ public class Zombie : MonoBehaviour, IEnemy
     public void HideAlertIcon()
     {
         exclamation.SetActive(false);
+    }
+
+    public void TakeDamage(int damage, float knocback)
+    {
+
+        if (!(stateMachine.CurrentState is ZombieHurt) && !(stateMachine.CurrentState is ZombieDeath))
+        {
+            lastHitDirection = Mathf.FloorToInt(transform.position.x - player.transform.position.x);
+            lastHitDirection = lastHitDirection / Mathf.Abs(lastHitDirection);
+            lastHitForce = knocback;
+
+            health -= damage;
+            stateMachine.ChangeState("Hurt");
+        }
+       
+    }
+
+    public void OnDeathAnimationComplete()
+    {
+        Destroy(gameObject);
     }
 }

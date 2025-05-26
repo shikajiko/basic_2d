@@ -9,4 +9,6 @@ public interface IEnemy
 
     public Vector2 playerPosition { get; }
     public bool isAggro { get; }
+
+    public void TakeDamage(int damage, float knockback);
 }

@@ -20,6 +20,13 @@ public class Player : MonoBehaviour
     public bool isHoldingShift;
     public bool isAttackPressed;
 
+    //circle projection for collision check when attacking
+    public GameObject attackPoint;
+    public Vector2 attackPointPosition;
+    public Vector2 attackBoxSize;
+    public LayerMask enemyLayer;
+    public IEnemy enemyObject;
+
     //define player states
     public IdleState IdleState;
     public WalkState WalkState;
@@ -55,13 +62,19 @@ public class Player : MonoBehaviour
     {
         //take inputs
         horizontalInput = Input.GetAxisRaw("Horizontal");
-        if (horizontalInput > 0)
+
+        if(!(stateMachine._currentState is PlayerAttackState))
         {
-            sprite.flipX = false;
+            if (horizontalInput > 0)
+            {
+                sprite.flipX = false;
+            }
+            else if (horizontalInput < 0)
+            {
+                sprite.flipX = true;
+            }
         }
-        else if (horizontalInput < 0) {
-            sprite.flipX = true;
-        }
+       
 
         direction = sprite.flipX ? -1 : 1;  
 
@@ -79,7 +92,10 @@ public class Player : MonoBehaviour
         else if ((isAttackPressed == true && IsGrounded()) && !(stateMachine._currentState is PlayerAttackState)) {
             stateMachine.ChangeState(PunchState1);
         }
-        stateMachine.GetCurrentState();
+        //stateMachine.GetCurrentState();
+
+        //make sure the hitbox is always in front of the player
+        attackPointPosition = sprite.flipX == true ? new Vector2(attackPoint.transform.position.x - 2, attackPoint.transform.position.y) : attackPoint.transform.position;
     }
 
     private void FixedUpdate()
@@ -95,9 +111,27 @@ public class Player : MonoBehaviour
         return false;
     }
 
+    public void Attack()
+    {
+        
+        Collider2D[] enemy = Physics2D.OverlapBoxAll(attackPointPosition, attackBoxSize, enemyLayer);
+
+        foreach (Collider2D other in enemy) {
+            if (other.TryGetComponent<IEnemy>(out var enemyObject))
+            {
+                enemyObject.TakeDamage(1, 10);
+            }
+            
+        }
+    }
     private void OnDrawGizmos()
     {
         Gizmos.DrawWireCube(transform.position - transform.up * castDistance, boxSize);
+        Gizmos.DrawWireCube(attackPointPosition, attackBoxSize);
     }
+
+
+
+    
 
 }
