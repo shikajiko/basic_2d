@@ -67,16 +67,16 @@ public class Player : MonoBehaviour
         {
             if (horizontalInput > 0)
             {
-                sprite.flipX = false;
+                transform.rotation = Quaternion.Euler(0f, 0f, 0f); 
             }
             else if (horizontalInput < 0)
             {
-                sprite.flipX = true;
+                transform.rotation = Quaternion.Euler(0f, 180f, 0f); 
             }
         }
        
 
-        direction = sprite.flipX ? -1 : 1;  
+        direction = transform.rotation.y < 0f? -1 : 1;  
 
         isJumpPressed = Input.GetButtonDown("Jump");
         isHoldingShift = Input.GetKey(KeyCode.LeftShift);
@@ -92,10 +92,8 @@ public class Player : MonoBehaviour
         else if ((isAttackPressed == true && IsGrounded()) && !(stateMachine._currentState is PlayerAttackState)) {
             stateMachine.ChangeState(PunchState1);
         }
-        //stateMachine.GetCurrentState();
 
-        //make sure the hitbox is always in front of the player
-        attackPointPosition = sprite.flipX == true ? new Vector2(attackPoint.transform.position.x - 2, attackPoint.transform.position.y) : attackPoint.transform.position;
+       
     }
 
     private void FixedUpdate()
@@ -114,7 +112,7 @@ public class Player : MonoBehaviour
     public void Attack()
     {
         
-        Collider2D[] enemy = Physics2D.OverlapBoxAll(attackPointPosition, attackBoxSize, enemyLayer);
+        Collider2D[] enemy = Physics2D.OverlapBoxAll(attackPoint.transform.position, attackBoxSize, enemyLayer);
 
         foreach (Collider2D other in enemy) {
             if (other.TryGetComponent<IEnemy>(out var enemyObject))
@@ -127,7 +125,7 @@ public class Player : MonoBehaviour
     private void OnDrawGizmos()
     {
         Gizmos.DrawWireCube(transform.position - transform.up * castDistance, boxSize);
-        Gizmos.DrawWireCube(attackPointPosition, attackBoxSize);
+        Gizmos.DrawWireCube(attackPoint.transform.position, attackBoxSize);
     }
 
 

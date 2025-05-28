@@ -150,7 +150,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0.008, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
-  m_Children: []
+  m_Children:
+  - {fileID: 741788387}
   m_Father: {fileID: 1826840873}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &111734319
@@ -1201,12 +1202,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 741788386}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.9, y: 0.97, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1826840873}
+  m_Father: {fileID: 111734318}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &908320634
 GameObject:
@@ -40647,7 +40648,6 @@ Transform:
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 111734318}
-  - {fileID: 741788387}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!50 &1826840875
@@ -40740,7 +40740,8 @@ MonoBehaviour:
   isHoldingShift: 0
   isAttackPressed: 0
   attackPoint: {fileID: 741788386}
-  attackBoxSize: {x: 1.6, y: 0.5}
+  attackPointPosition: {x: 0, y: 0}
+  attackBoxSize: {x: 1.6, y: 0.84}
   enemyLayer:
     serializedVersion: 2
     m_Bits: 128
@@ -40870,6 +40871,7 @@ MonoBehaviour:
   playerMask:
     serializedVersion: 2
     m_Bits: 64
+  health: 0
   lastHitDirection: 0
   lastHitForce: 0
   exclamationPrefab: {fileID: 7115595819613359748, guid: 425f4ee264f9553489b83b6554ea9a65, type: 3}
